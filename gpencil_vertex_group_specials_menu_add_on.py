@@ -11,14 +11,8 @@ bl_info = {
 import bpy
 from bpy.types import Menu, Panel, UIList
 from rna_prop_ui import PropertyPanel
+from bl_ui.properties_data_gpencil import DATA_PT_gpencil_vertex_groups
 
-from bl_ui.properties_grease_pencil_common import (
-    GreasePencilLayerMasksPanel,
-    GreasePencilLayerTransformPanel,
-    GreasePencilLayerAdjustmentsPanel,
-    GreasePencilLayerRelationsPanel,
-    GreasePencilLayerDisplayPanel,
-)
 
 class ObjectButtonsPanel:
     bl_space_type = 'PROPERTIES'
@@ -32,7 +26,7 @@ class ObjectButtonsPanel:
 
 
 
-class DATA_PT_gpencil_vertex_groups(ObjectButtonsPanel, Panel):
+class DATA_PT_gpencil_vertex_groups_extended(ObjectButtonsPanel, Panel):
     bl_label = "Vertex Groups"
     bl_options = {'DEFAULT_CLOSED'}
 
@@ -77,13 +71,16 @@ class DATA_PT_gpencil_vertex_groups(ObjectButtonsPanel, Panel):
 
 def register():
     try:
-        bpy.utils.register_class(DATA_PT_gpencil_vertex_groups)
+        bpy.utils.unregister_class(DATA_PT_gpencil_vertex_groups)
+        bpy.utils.register_class(DATA_PT_gpencil_vertex_groups_extended)
     except ValueError:
         pass
 
 def unregister():
     try:
-        bpy.utils.unregister_class(DATA_PT_gpencil_vertex_groups)
+        bpy.utils.unregister_class(DATA_PT_gpencil_vertex_groups_extended)
+        bpy.utils.register_class(DATA_PT_gpencil_vertex_groups)
+        
     except ValueError:
         pass
 
